@@ -10,4 +10,4 @@ It expects you to introduce all the lines of the sudoku one by one
 ```
 ### 2 examples:  
   - With one solution:
-    ![Alt text](C:\Users\david\Pictures\img.png?raw=true "1 Solution")
+    ![Alt text](https://imgur.com/J1NMKlW)
