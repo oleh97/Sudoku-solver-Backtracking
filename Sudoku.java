@@ -12,8 +12,11 @@ public class Sudoku {
         int i = fila;
         int j = columna;
         while(i < 3 && j < 3 && k < 9) {
-            if(i == 2 && j == 2 && k == 8) {
+            if(i == 2 && j == 2 && k == 8 && sudoku[2][2][8] != 0) {
                 soluciones++;
+                System.out.println("####SOLUTION Nº"+soluciones+"####");
+                print(sudoku);
+                System.out.println();
                 return;
             }
             if(casilla[i][j][k]) {
@@ -63,30 +66,12 @@ public class Sudoku {
     }
     
     static boolean comprobarFila(int[][][] sudoku, int i, int k, int numero) {
-        if (k < 3) {
-            for(k = 0; k < 3; k++) {
-                for(int j = 0; j < 3; j++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else if (k < 6) {
-            for(k = 3; k < 6; k++) {
-                for(int j = 0; j < 3; j++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            for(k = 6; k < 9; k++) {
-                for(int j = 0; j < 3; j++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
+        int min = 3*(k/3);
+        int max = 3+(3*(k/3));
+        for(k = min; k < max; k++) {
+            for(int j = 0; j < 3; j++) {
+                if(sudoku[i][j][k] == numero) {
+                    return false;
                 }
             }
         }
@@ -94,30 +79,11 @@ public class Sudoku {
     }
     
     static boolean comprobarColumna(int[][][] sudoku, int j, int k, int numero) {
-        if(k%3 == 0) {
-            for(k = 0; k <= 6; k+=3) {
-                for(int i = 0; i < 3; i++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else if(k%3 == 1) {
-            for(k = 1; k <= 7; k+=3) {
-                for(int i = 0; i < 3; i++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            for(k = 2; k <= 8; k+=3) {
-                for(int i = 0; i < 3; i++) {
-                    if(sudoku[i][j][k] == numero) {
-                        return false;
-                    }
+        int mod = k%3;
+        for(k = mod; k <= 6+mod; k+=3) {
+            for(int i = 0; i < 3; i++) {
+                if(sudoku[i][j][k] == numero) {
+                    return false;
                 }
             }
         }
@@ -141,19 +107,11 @@ public class Sudoku {
         for(int k = 0; k < 9; k++) {
             for(int i = 0; i < 3; i++) {
                 for(int j = 0; j < 3; j++) {
-                    if (k < 3) {
-                        sudoku[i][j][k] = m[i][j+k*3];
-                    }
-                    else if (k < 6) {
-                        sudoku[i][j][k] = m[i+3][j+(k-3)*3];
-                    }
-                    else {
-                        sudoku[i][j][k] = m[i+6][j+(k-6)*3];
-                    }
+                    sudoku[i][j][k] = m[i+(3*(k/3))][j+(k-(3*(k/3)))*3];
                 }
             }
         }
-
+        
         return sudoku;
     }
     
@@ -162,7 +120,7 @@ public class Sudoku {
         for(int k = 0; k < 9; k++) {
             for(int i = 0; i < 3; i++) {
                 for(int j = 0; j < 3; j++) {
-                        casillas[i][j][k] = (s[i][j][k] == 0);
+                    casillas[i][j][k] = (s[i][j][k] == 0);
                 }
             }
         }
@@ -194,6 +152,25 @@ public class Sudoku {
         sudoku = formarSudoku(matrizLectura);
         casillas = comprobarCasillas(sudoku);
         calcularSudoku(0, 0, 0, sudoku, casillas);
-        System.out.println(soluciones);
+        System.out.println("##Nº of Solutions: "+soluciones+" ##");
+    }
+    
+    static void print(int[][][] sudoku){
+        for(int k = 0; k<9; k+=3){
+            for(int i = 0; i<3; i++){
+                printRow(sudoku,i,k);
+                System.out.println();
+            }
+        }
+    }
+    
+    static void printRow(int[][][] sudoku, int i, int k){
+        int min = 3*(k/3);
+        int max = 3+(3*(k/3));
+        for(k = min; k < max; k++) {
+            for(int j = 0; j < 3; j++) {
+                System.out.print(sudoku[i][j][k]+" ");
+            }
+        }
     }
 }
