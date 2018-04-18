@@ -10,4 +10,8 @@ It expects you to introduce all the lines of the sudoku one by one
 ```
 ### 2 examples:  
   - With one solution:
-    ![Alt text](https://imgur.com/J1NMKlW)
+    [Imgur Image](https://i.imgur.com/J1NMKlW.png)
+  - With multiple solutions:
+    [Imgur Image](https://i.imgur.com/aKcRPsh.png)
+    [Imgur Image](https://i.imgur.com/6lijykY.png)
+    [Imgur Image](https://i.imgur.com/pgZbjhX.png)
